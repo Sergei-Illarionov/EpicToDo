@@ -3,13 +3,15 @@ import {FilterValuesType, TaskType} from "./App";
 
 
 type TodoListPropsType = {
+    id: string
     title: string
     filter: FilterValuesType
     tasks: Array<TaskType>
-    removeTask: (taskID: string) => void
-    addTask: (title: string) => void
-    changeTodoListFilter: (newFilterValue: FilterValuesType) => void
-    changeTaskStatus: (taskID: string, newIsDoneValue: boolean) => void
+    removeTask: (taskID: string, todoListID: string) => void
+    removeTodoList: (todoListID: string) => void
+    addTask: (title: string, todoListID: string) => void
+    changeTodoListFilter: (newFilterValue: FilterValuesType, todoListID: string) => void
+    changeTaskStatus: (taskID: string, newIsDoneValue: boolean, todoListID: string) => void
 }
 
 function TodoList(props: TodoListPropsType) {
@@ -20,7 +22,7 @@ function TodoList(props: TodoListPropsType) {
     const addTask = () => {
         const trimmedTitle = title.trim()
         if (trimmedTitle) {
-            props.addTask(trimmedTitle)
+            props.addTask(trimmedTitle, props.id)
         } else {
             setError(true)
         }
@@ -38,15 +40,15 @@ function TodoList(props: TodoListPropsType) {
         setError(false)
     }
 
-    const setAllFilter = () => props.changeTodoListFilter("all")
-    const setActiveFilter = () => props.changeTodoListFilter("active")
-    const setCompletedFilter = () => props.changeTodoListFilter("completed")
+    const setAllFilter = () => props.changeTodoListFilter("all", props.id)
+    const setActiveFilter = () => props.changeTodoListFilter("active", props.id)
+    const setCompletedFilter = () => props.changeTodoListFilter("completed", props.id)
 
 
     const tasks = props.tasks.map(task => {
-        const removeTask = () => props.removeTask(task.id)
+        const removeTask = () => props.removeTask(task.id, props.id)
         const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) =>
-            props.changeTaskStatus(task.id, e.currentTarget.checked)
+            props.changeTaskStatus(task.id, e.currentTarget.checked, props.id)
 
         return (
             <li className={task.isDone ? "is-done" : ""} key={task.id}>
@@ -63,7 +65,12 @@ function TodoList(props: TodoListPropsType) {
 
     return (
         <div>
-            <h3>{props.title}</h3>
+            <h3>{props.title}
+                <button onClick={() => {
+                    props.removeTodoList(props.id)
+                }}>x
+                </button>
+            </h3>
             <div>
                 <input value={title}
                        onChange={changeTitle}
