@@ -1,21 +1,8 @@
-.App {
-  padding: 30px;
-  display: flex;
+.is-done {
+    opacity: 0.5;
 }
 
-.App > div {
-  margin-right: 50px;
-}
-.is-done {
-  opacity: 0.5;
-}
-.active {
-  background-color: cornflowerblue;
-}
-.error {
-  border: 2px solid red;
-  outline: transparent;
-}
-.error-message {
-  color: red;
+.ul {
+    list-style: none;
+    padding-left: 0;
 }
