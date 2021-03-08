@@ -23,11 +23,12 @@ type ChangeTodoListTitleActionType = {
     title: string
     id: string
 }
+const initialState: Array<TodoListType> = []
 
 export type ActionType = RemoveTodoListActionType | AddTodoListActionType |
     ChangeTodoListFilterActionType | ChangeTodoListTitleActionType
 
-export const todoListReducer = (state: Array<TodoListType>, action: ActionType): Array<TodoListType> => {
+export const todoListReducer = (state: Array<TodoListType> = initialState, action: ActionType): Array<TodoListType> => {
     switch (action.type) {
         case "ADD-TODOLIST": {
             const newTodoListID = action.todolistId
