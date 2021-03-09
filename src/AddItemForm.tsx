@@ -8,26 +8,29 @@ type AddItemFormPropsType = {
 }
 
 function AddItemForm(props: AddItemFormPropsType) {
-    const [title, setTitle] = useState<string>("")
-    const [error, setError] = useState<boolean>(false)
+    console.log("AddItemForm clicked")
+    const [title, setTitle] = useState("")
+    const [error, setError] = useState<string | null>(null)
 
     const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
-        setError(false)
     }
 
     const addItem = () => {
-        const trimmedTitle = title.trim()
-        if (trimmedTitle) {
-            props.addItem(trimmedTitle)
+        if (title.trim() !==""){
+            props.addItem(title);
+            setTitle("");
         } else {
-            setError(true)
+            setError("title is required")
         }
-        setTitle("")
 
     }
     const onKeyPressAddTask = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter") addItem()
+        if (error !== null) {
+            setError(null);
+        }
+        if (e.key === "Enter")
+            addItem();
     }
     return (
         <div>
@@ -36,12 +39,10 @@ function AddItemForm(props: AddItemFormPropsType) {
                 value={title}
                 onChange={changeTitle}
                 onKeyPress={onKeyPressAddTask}
-                onBlur={() => {
-                    setError(false)
-                }}
+
                 helperText={error ? "Title is required!" : ""}
                 label={props.title}
-                error={error}
+                error={!!error}
             />
             <IconButton onClick={addItem}>
                 <AddBox/>
