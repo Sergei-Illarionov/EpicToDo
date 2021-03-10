@@ -11,7 +11,7 @@ import {
     ChangeTodoListTitleAC,
     RemoveTodoListAC,
 } from "./state/tl-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, } from "./state/tasks-reducer";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC,} from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
 
@@ -36,8 +36,7 @@ export type FilterValuesType = "all" | "active" | "completed";
 function AppWithRedux() {
 
 
-
-    const todoLists = useSelector<AppRootStateType, Array<TodoListType>>(state => state.todolists )
+    const todoLists = useSelector<AppRootStateType, Array<TodoListType>>(state => state.todolists)
     const tasks = useSelector<AppRootStateType, TaskStateType>(state => state.tasks)
     const dispatch = useDispatch();
 
@@ -87,10 +86,10 @@ function AppWithRedux() {
             taskForTodoList = tasks[tl.id].filter(t => t.isDone)
         }
         return (
-            <Grid item key={tl.id}>
+            <Grid item>
                 <Paper elevation={10} style={{padding: "20px"}}>
                     <TodoList
-
+                        key={tl.id}
                         id={tl.id}
                         title={tl.title}
                         tasks={taskForTodoList}
