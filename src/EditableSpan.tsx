@@ -16,6 +16,7 @@ function EditableSpan(props: EditableSpanPropsType) {
     }
 
     function offEditMode() {
+        debugger
         setEditMode(false)
         props.changeItem(title)
     }
@@ -33,7 +34,7 @@ function EditableSpan(props: EditableSpanPropsType) {
                 onBlur={offEditMode}
                 onChange={changeTitle}
             />
-            : <span onDoubleClick={onEditMode}>{props.title}</span>
+            : <span onDoubleClick={onEditMode}>{title}</span>
     )
 }
 
